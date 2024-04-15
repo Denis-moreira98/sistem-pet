@@ -89,7 +89,7 @@ module.exports = class UserController {
 
       //check if password match with db password
 
-      const checkpassword = await bycript.compare(password, user.password);
+      const checkpassword = await bcrypt.compare(password, user.password);
 
       if (!checkpassword) {
          res.status(422).json({
@@ -99,5 +99,18 @@ module.exports = class UserController {
       }
 
       await createUserToken(user, req, res);
+   }
+
+   static async checkUser(req, res) {
+      let currentUser;
+
+      console.log(req.headers.authorization);
+
+      if (req.headers.authorization) {
+      } else {
+         currentUser = null;
+      }
+
+      res.status(200).send(currentUser);
    }
 };
