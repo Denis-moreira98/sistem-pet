@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
+const url = process.env.DATA_BASE;
+
 async function main() {
-   await mongoose.connect(process.env.DATA_BASE);
-   console.log("Conectou ao Mongoose");
+   await mongoose.connect(url);
+   console.log("Conectou com Mongoose!");
 }
 
 main().catch((err) => console.log(err));
