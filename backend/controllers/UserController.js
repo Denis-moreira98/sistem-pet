@@ -1,9 +1,11 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 // helpers function
 const createUserToken = require("../helpers/create-user-token");
+const getUserByToken = require("../helpers/get-user-by-token");
 const getToken = require("../helpers/get-token");
 
 module.exports = class UserController {
@@ -123,14 +125,18 @@ module.exports = class UserController {
 
    static async getUserById(req, res) {
       const id = req.params.id;
-      const user = await User.findById(id).select("-password");
 
-      if (!user) {
-         res.status(422).json({ message: "Usuário não encontrado" });
-
+      //check if user exists
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+         res.status(400).json({ message: "Usuário não encontrado" });
          return;
       }
 
-      res.status(200).json({ user });
+      try {
+         const user = await User.findById(id).select("-password");
+         res.status(200).json({ user });
+      } catch (err) {
+         res.status(500).json({ message: err });
+      }
    }
 };
