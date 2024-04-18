@@ -81,4 +81,19 @@ module.exports = class PetController {
          res.status(404).json({ message: err });
       }
    }
+
+   static async getAllUserPets(req, res) {
+      // get user from token
+      const token = getToken(req);
+      const user = await getUserByToken(token);
+
+      try {
+         const pets = await Pet.find({ "user._id": user._id }).sort(
+            "-createdAt"
+         );
+         res.status(200).json({ pets });
+      } catch (err) {
+         res.status(404).json({ message: err });
+      }
+   }
 };
