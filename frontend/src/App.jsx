@@ -1,27 +1,27 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/home";
-import { Layout } from "./components/layout";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
+import { Header } from "./components/header";
+import { Footer } from "./components/footer";
+import { Message } from "./components/flashMessage";
+import { Container } from "./components/container";
 
-const router = createBrowserRouter([
-   {
-      element: <Layout />,
-      children: [
-         {
-            path: "/",
-            element: <Home />,
-         },
-         {
-            path: "/login",
-            element: <Login />,
-         },
-         {
-            path: "/register",
-            element: <Register />,
-         },
-      ],
-   },
-]);
+function App() {
+   return (
+      <>
+         <Header />
+         <Message />
+         <Container>
+            <Routes>
+               <Route path="/" element={<Home />} />
+               <Route path="/login" element={<Login />} />
+               <Route path="/register" element={<Register />} />
+            </Routes>
+         </Container>
+         <Footer />
+      </>
+   );
+}
 
-export { router };
+export default App;
