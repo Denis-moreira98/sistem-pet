@@ -38,7 +38,7 @@ export function Register() {
             />
             <Input
                text="Email"
-               type="text"
+               type="email"
                name="email"
                placeholder="Digite o seu email"
                handlerOnChange={handleChange}

@@ -4,6 +4,7 @@ import { Input } from "../../components/form/input";
 import { useState, useEffect } from "react";
 import api from "../../utils/api";
 import useFlashMessage from "../../hooks/useFlashMessage";
+import { ImageProfile } from "../../components/imageProfile";
 
 export function Profile() {
    const [user, setUser] = useState({});
@@ -63,7 +64,7 @@ export function Profile() {
          <div className={styles.profile_header}>
             <h1>Perfil</h1>
             {(user.image || preview) && (
-               <img
+               <ImageProfile
                   src={
                      preview
                         ? URL.createObjectURL(preview)
