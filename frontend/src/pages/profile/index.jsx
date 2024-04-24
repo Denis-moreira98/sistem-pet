@@ -2,14 +2,29 @@ import styles from "./styles.module.css";
 import formStyles from "../register/styles.module.css";
 import { Input } from "../../components/form/input";
 import { useState, useEffect } from "react";
-// import api from "../../utils/api";
+import api from "../../utils/api";
 
 export function Profile() {
    const [user, setUser] = useState({});
+   const [token] = useState(localStorage.getItem("token") || "");
 
-   function onFileChange() {}
+   useEffect(() => {
+      api.get("/users/checkuser", {
+         headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+         },
+      }).then((response) => {
+         setUser(response.data);
+      });
+   }, [token]);
 
-   function handlerChange() {}
+   function onFileChange(e) {
+      setUser({ ...user, [e.target.name]: e.target.files[0] });
+   }
+
+   function handlerChange(e) {
+      setUser({ ...user, [e.target.name]: e.target.value });
+   }
 
    return (
       <section>
