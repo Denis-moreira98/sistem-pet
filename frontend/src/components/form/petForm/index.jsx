@@ -13,7 +13,7 @@ export function PetForm({ petData, btnText, handleSubmit }) {
 
    function onFileChange(e) {
       setPreview(Array.from(e.target.files));
-      setPet({ ...pet, image: [...e.target.files] });
+      setPet({ ...pet, images: [...e.target.files] });
    }
 
    function handleChange(e) {
@@ -21,12 +21,14 @@ export function PetForm({ petData, btnText, handleSubmit }) {
    }
 
    function handleColor(e) {
-      setPet({ ...pet, color: e.target.options[e.target.selected].text });
+      setPet({
+         ...pet,
+         color: e.target.options[e.target.selectedIndex].text,
+      });
    }
 
    function submit(e) {
       e.preventDefault();
-      console.log(pet);
       handleSubmit(pet);
    }
 
