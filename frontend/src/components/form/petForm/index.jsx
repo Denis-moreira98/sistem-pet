@@ -1,15 +1,18 @@
 import { useState } from "react";
-import styles from "../../../pages/register/styles.module.css";
+import formStyles from "../../../pages/register/styles.module.css";
 import { Input } from "../input";
 import { Select } from "../select";
 
 export function PetForm({ petData, btnText, handleSubmit }) {
    const [pet, setPet] = useState(petData || {});
-   // const [preview, setPreview] = useState([]);
+   const [preview, setPreview] = useState([]);
+
+   const apiUrl = import.meta.env.VITE_API_URL;
 
    const colors = ["Branco", "Preto", "Cinza", "Caramelo", "Mesclado"];
 
    function onFileChange(e) {
+      setPreview(Array.from(e.target.files));
       setPet({ ...pet, image: [...e.target.files] });
    }
 
@@ -28,7 +31,26 @@ export function PetForm({ petData, btnText, handleSubmit }) {
    }
 
    return (
-      <form onSubmit={submit} className={styles.form_container}>
+      <form onSubmit={submit} className={formStyles.form_container}>
+         <div className={formStyles.preview_pet_images}>
+            {preview.length > 0
+               ? preview.map((image, index) => (
+                    <img
+                       src={URL.createObjectURL(image)}
+                       alt={pet.name}
+                       key={`${pet.name}+${index}`}
+                    />
+                 ))
+               : pet.images &&
+                 pet.images.map((image, index) => (
+                    <img
+                       src={`${apiUrl}/images/pets/${image}`}
+                       alt={pet.name}
+                       key={`${pet.name}+${index}`}
+                    />
+                 ))}
+         </div>
+
          <Input
             text="Imagens do Pet"
             type="file"
