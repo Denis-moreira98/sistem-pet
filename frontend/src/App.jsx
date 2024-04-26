@@ -10,6 +10,7 @@ import { Profile } from "./pages/profile";
 import { MyPets } from "./pages/myPets";
 import { AddPet } from "./pages/addPet";
 import { EditPet } from "./pages/editPet";
+import { PetDetails } from "./pages/petDatails";
 
 function App() {
    return (
@@ -19,12 +20,13 @@ function App() {
          <Container>
             <Routes>
                <Route path="/" element={<Home />} />
-               <Route path="/login" element={<Login />} />
                <Route path="/register" element={<Register />} />
+               <Route path="/login" element={<Login />} />
                <Route path="/user/profile" element={<Profile />} />
-               <Route path="/pet/mypets" element={<MyPets />} />
                <Route path="/pet/add" element={<AddPet />} />
+               <Route path="/pet/mypets" element={<MyPets />} />
                <Route path="/pet/edit/:id" element={<EditPet />} />
+               <Route path="/pet/:id" element={<PetDetails />} />
             </Routes>
          </Container>
          <Footer />
