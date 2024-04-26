@@ -1,15 +1,31 @@
-// import api from "../../utils/api";
+import api from "../../utils/api";
 import styles from "./styles.module.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { ImageProfile } from "../../components/imageProfile";
-// import useFlashMessage from "../../hooks/useFlashMessage";
+import useFlashMessage from "../../hooks/useFlashMessage";
 
 export function MyPets() {
    const [pets, setPets] = useState([]);
    const [token] = useState(localStorage.getItem("token") || "");
+   // eslint-disable-next-line no-unused-vars
+   const { setFlashMessage } = useFlashMessage();
+
+   const apiUrl = import.meta.env.VITE_API_URL;
+
+   useEffect(() => {
+      api.get("/pets/mypets", {
+         headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+         },
+      })
+         .then((response) => {
+            setPets(response.data.pets);
+         })
+         .catch((err) => console.log(err));
+   }, [token]);
 
    return (
       <sqction>
