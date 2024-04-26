@@ -10,7 +10,6 @@ import useFlashMessage from "../../hooks/useFlashMessage";
 export function MyPets() {
    const [pets, setPets] = useState([]);
    const [token] = useState(localStorage.getItem("token") || "");
-   // eslint-disable-next-line no-unused-vars
    const { setFlashMessage } = useFlashMessage();
 
    const apiUrl = import.meta.env.VITE_API_URL;
@@ -37,7 +36,7 @@ export function MyPets() {
             },
          })
          .then((response) => {
-            const updatePets = pets.filter((pet) => pet._id != id);
+            const updatePets = pets.filter((pet) => pet._id !== id);
             setPets(updatePets);
             return response.data;
          })
