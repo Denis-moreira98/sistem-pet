@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import api from "../../utils/api";
 
 import { useState, useEffect } from "react";
@@ -6,12 +5,12 @@ import { useParams, Link } from "react-router-dom";
 
 import styles from "./styles.module.css";
 
-// import useFlashMessage from "../../hooks/useFlashMessage";
+import useFlashMessage from "../../hooks/useFlashMessage";
 
 export function PetDetails() {
    const [pet, setPet] = useState({});
    const { id } = useParams();
-   // const [setFlashMessage] = useFlashMessage();
+   const { setFlashMessage } = useFlashMessage();
    const [token] = useState(localStorage.getItem("token") || "");
 
    const apiUrl = import.meta.env.VITE_API_URL;
@@ -21,6 +20,28 @@ export function PetDetails() {
          setPet(response.data.pet);
       });
    }, [id]);
+
+   async function schedule() {
+      let msgType = "success";
+
+      const data = await api
+         .patch(`pets/schedule/${pet._id}`, {
+            headers: {
+               Authorization: `Bearer ${JSON.parse(token)}`,
+            },
+         })
+         .then((response) => {
+            console.log(response.data);
+            return response.data;
+         })
+         .catch((err) => {
+            console.log(err);
+            msgType = "error";
+            return err.response.data;
+         });
+
+      setFlashMessage(data.message, msgType);
+   }
 
    return (
       <>
@@ -46,7 +67,7 @@ export function PetDetails() {
                   <span className="bold">Idade:</span> {pet.age} anos
                </p>
                {token ? (
-                  <button>Solicitar uma Visita</button>
+                  <button onClick={schedule}>Solicitar uma Visita</button>
                ) : (
                   <p>
                      Você precisa <Link to="/register">criar uma conta</Link>{" "}
