@@ -1,16 +1,19 @@
 import { Routes, Route } from "react-router-dom";
-import { Home } from "./pages/home";
-import { Login } from "./pages/login";
-import { Register } from "./pages/register";
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import { Message } from "./components/flashMessage";
 import { Container } from "./components/container";
+
+// Paginas
+import { Home } from "./pages/home";
+import { Register } from "./pages/register";
+import { Login } from "./pages/login";
 import { Profile } from "./pages/profile";
-import { MyPets } from "./pages/myPets";
 import { AddPet } from "./pages/addPet";
+import { MyPets } from "./pages/myPets";
 import { EditPet } from "./pages/editPet";
 import { PetDetails } from "./pages/petDatails";
+import { MyAdoptions } from "./pages/myAdoptions";
 
 function App() {
    return (
@@ -26,6 +29,7 @@ function App() {
                <Route path="/pet/add" element={<AddPet />} />
                <Route path="/pet/mypets" element={<MyPets />} />
                <Route path="/pet/edit/:id" element={<EditPet />} />
+               <Route path="/pet/myadoption" element={<MyAdoptions />} />
                <Route path="/pet/:id" element={<PetDetails />} />
             </Routes>
          </Container>
