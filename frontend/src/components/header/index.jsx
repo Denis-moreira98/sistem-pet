@@ -21,6 +21,9 @@ export function Header() {
                {authenticated ? (
                   <>
                      <li>
+                        <Link to="/pet/myadoption">Minhas Adoções</Link>
+                     </li>
+                     <li>
                         <Link to="/pet/mypets">Meus Pets</Link>
                      </li>
                      <li>
