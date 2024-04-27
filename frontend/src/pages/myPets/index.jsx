@@ -47,8 +47,28 @@ export function MyPets() {
       setFlashMessage(data.message, msgType);
    }
 
+   async function concludeAdoption(id) {
+      let msgType = "success";
+
+      const data = await api
+         .patch(`/pets/conclude/${id}`, {
+            headers: {
+               Authorization: `Bearer ${JSON.parse(token)}`,
+            },
+         })
+         .then((response) => {
+            return response.data;
+         })
+         .catch((err) => {
+            msgType = "error";
+            return err.response.data;
+         });
+
+      setFlashMessage(data.message, msgType);
+   }
+
    return (
-      <sqction>
+      <section>
          <div className={styles.petslist_header}>
             <h1>Meus Pets</h1>
             <Link to="/pet/add">Cadastrar Pet</Link>
@@ -67,7 +87,12 @@ export function MyPets() {
                         {pet.available ? (
                            <>
                               {pet.adopter && (
-                                 <button className={styles.conclude_btn}>
+                                 <button
+                                    onClick={() => {
+                                       concludeAdoption(pet._id);
+                                    }}
+                                    className={styles.conclude_btn}
+                                 >
                                     Concluir adoção
                                  </button>
                               )}
@@ -84,6 +109,6 @@ export function MyPets() {
                ))}
          </div>
          {pets.length === 0 && <p>Não há Pets cadastrados</p>}
-      </sqction>
+      </section>
    );
 }
